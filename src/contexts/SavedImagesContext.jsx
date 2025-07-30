@@ -1,28 +1,22 @@
 // src/contexts/SavedImagesContext.jsx
-import React, { createContext, useState, useEffect, useContext } from 'react';
-import { useAuth } from './AuthContext'; // Necesitamos el usuario actual para saber quién guarda qué
+import React, { createContext, useState, useEffect, useContext, useCallback } from 'react';
+import { useAuth } from './AuthContext';
 
-// 1. Crea el Contexto
 export const SavedImagesContext = createContext();
 
-// 2. Crea el Provider que gestionará el estado y la lógica
 export const SavedImagesProvider = ({ children }) => {
-  const { user, isAuthenticated } = useAuth(); // Obtén el usuario actual del AuthContext
+  const { user, isAuthenticated } = useAuth();
 
-  // `savedImagesMap` será un objeto donde la clave es el ID del usuario
-  // y el valor es un array de IDs de imágenes guardadas por ese usuario.
   const [savedImagesMap, setSavedImagesMap] = useState(() => {
     try {
       const storedMap = localStorage.getItem('pinfluence-saved-images');
-      // Intenta parsear el JSON; si hay un error (ej. datos corruptos), inicia con un objeto vacío
       return storedMap ? JSON.parse(storedMap) : {};
     } catch (error) {
       console.error("Error al parsear imágenes guardadas desde localStorage:", error);
-      return {}; // En caso de error, inicializa vacío
+      return {};
     }
   });
 
-  // Guarda `savedImagesMap` en `localStorage` cada vez que cambia
   useEffect(() => {
     try {
       localStorage.setItem('pinfluence-saved-images', JSON.stringify(savedImagesMap));
@@ -31,42 +25,21 @@ export const SavedImagesProvider = ({ children }) => {
     }
   }, [savedImagesMap]);
 
-  // Función para obtener las imágenes guardadas del usuario actual
-  // Usamos useCallback para memoizar esta función, útil si la pasamos como dependencia
-  const getUserSavedImages = React.useCallback(() => {
+  const getUserSavedImages = useCallback(() => {
     if (!isAuthenticated || !user) {
-      return []; // Si no hay usuario o no está autenticado, devuelve un array vacío
+      return [];
     }
-    // Devuelve el array de IDs de imágenes para el usuario actual, o un array vacío si no hay
     return savedImagesMap[user.id] || [];
-  }, [isAuthenticated, user, savedImagesMap]); // Dependencias para useCallback
+  }, [isAuthenticated, user, savedImagesMap]);
 
-  // Función para guardar una imagen por su ID
   const saveImage = (imageId) => {
     if (!isAuthenticated || !user) {
       alert("Debes iniciar sesión para guardar imágenes.");
       return;
     }
     setSavedImagesMap(prevMap => {
-      // Usa un `Set` para asegurar IDs únicos y evitar duplicados
       const userSaved = new Set(prevMap[user.id] || []);
-      userSaved.add(imageId); // Añade el nuevo ID de imagen
-
-      return {
-        ...prevMap, // Copia el mapa existente
-        [user.id]: Array.from(userSaved) // Actualiza el array de IDs para el usuario
-      };
-    });
-  };
-
-  // Función para desguardar una imagen por su ID
-  const unsaveImage = (imageId) => {
-    if (!isAuthenticated || !user) {
-      return; // No se puede desguardar si no hay usuario
-    }
-    setSavedImagesMap(prevMap => {
-      const userSaved = new Set(prevMap[user.id] || []);
-      userSaved.delete(imageId); // Elimina el ID de imagen
+      userSaved.add(imageId);
       return {
         ...prevMap,
         [user.id]: Array.from(userSaved)
@@ -74,7 +47,20 @@ export const SavedImagesProvider = ({ children }) => {
     });
   };
 
-  // Función para verificar si una imagen específica ya está guardada
+  const unsaveImage = (imageId) => {
+    if (!isAuthenticated || !user) {
+      return;
+    }
+    setSavedImagesMap(prevMap => {
+      const userSaved = new Set(prevMap[user.id] || []);
+      userSaved.delete(imageId);
+      return {
+        ...prevMap,
+        [user.id]: Array.from(userSaved)
+      };
+    });
+  };
+
   const isImageSaved = (imageId) => {
     if (!isAuthenticated || !user) {
       return false;
@@ -83,12 +69,27 @@ export const SavedImagesProvider = ({ children }) => {
     return userSaved.has(imageId);
   };
 
-  // Valor que se proveerá a los componentes hijos que consuman este contexto
+  // ¡NUEVA FUNCIÓN PARA BORRAR TODOS LOS PINES DEL USUARIO ACTUAL!
+  const clearSavedImages = () => {
+    if (!isAuthenticated || !user) {
+      alert("Debes iniciar sesión para borrar pines.");
+      return;
+    }
+    if (window.confirm("¿Estás seguro de que quieres borrar TODOS tus pines guardados? Esta acción es irreversible.")) {
+      setSavedImagesMap(prevMap => {
+        const newMap = { ...prevMap };
+        delete newMap[user.id]; // Elimina la entrada completa del usuario
+        return newMap;
+      });
+    }
+  };
+
   const savedImagesContextValue = {
-    getUserSavedImages, // Asegúrate de que esta función está aquí
+    getUserSavedImages,
     saveImage,
     unsaveImage,
     isImageSaved,
+    clearSavedImages, // <-- ¡Exportamos la nueva función!
   };
 
   return (
@@ -98,5 +99,4 @@ export const SavedImagesProvider = ({ children }) => {
   );
 };
 
-// 3. Crea un Custom Hook para consumir el contexto fácilmente en cualquier componente
 export const useSavedImages = () => useContext(SavedImagesContext);

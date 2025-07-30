@@ -2,8 +2,10 @@
 
 .image-card {
   position: relative;
-  width: 100%; /* O el tamaño que uses para las columnas */
-  /* Asegúrate de que tiene un aspect-ratio o una altura definida si las imágenes no son uniformes */
+  break-inside: avoid;
+  width: 100%;
+  margin-bottom: 20px;
+
   overflow: hidden;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -26,7 +28,7 @@
   width: 100%;
   height: auto;
   display: block;
-  border-radius: 8px; /* Para que coincida con el card */
+  border-radius: 8px;
 }
 
 .overlay {
@@ -40,55 +42,56 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 15px;
-  opacity: 0; /* Por defecto invisible */
+  /* Ajustamos el padding para que los elementos no estén tan pegados a los bordes */
+  padding: 15px; /* Ya estaba en 15px, si quieres más margen interior, puedes probar 20px */
+  opacity: 0;
   transition: opacity 0.3s ease;
   border-radius: 8px;
 }
 
 .image-card:hover .overlay {
-  opacity: 1; /* Visible al pasar el ratón */
+  opacity: 1;
 }
 
 .card-actions {
   display: flex;
-  justify-content: flex-end; /* Alinea los botones a la derecha */
-  gap: 8px; /* Espacio entre los botones */
-  z-index: 2; /* Asegura que los botones estén por encima del texto y la imagen */
+  justify-content: flex-end;
+  gap: 8px; /* Espacio entre los botones "Guardar" y "Ver" */
+  z-index: 2;
+  /* Añadimos un pequeño padding-right si el padding del overlay no es suficiente */
+  /* Si el padding del overlay ya los despega, esto podría no ser necesario */
+  padding-right: 5px; /* Pequeño ajuste si se pegan demasiado a la derecha */
 }
 
 .save-button, .view-button {
-  background-color: rgba(var(--secondary-color-rgb), 0.9); /* Usa tu color secundario con opacidad */
+  background-color: rgba(var(--secondary-color-rgb), 0.9);
   color: white;
   padding: 8px 15px;
   border: none;
-  border-radius: 20px; /* Botones pill-shaped */
+  border-radius: 20px;
   font-size: 0.9em;
   font-weight: 600;
   cursor: pointer;
   transition: background-color 0.2s ease, transform 0.1s ease;
-  text-decoration: none; /* Para el <a> del botón 'Ver' */
-  display: inline-flex; /* Para centrar texto si es necesario */
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  /* Evita que el botón cambie el diseño del overlay al hacer hover */
   flex-shrink: 0;
 }
 
 .save-button:hover, .view-button:hover {
   background-color: var(--hover-color);
-  transform: translateY(-2px); /* Pequeño efecto al pasar el ratón */
+  transform: translateY(-2px);
 }
 
 .save-button.saved {
-  background-color: var(--primary-color); /* Color diferente si la imagen está guardada */
+  background-color: var(--primary-color);
 }
 
 .image-description {
-  margin-top: auto; /* Empuja la descripción hacia abajo */
+  margin-top: auto;
   font-size: 0.9em;
   text-align: left;
-  /* Limita el texto a un par de líneas y añade elipsis si es muy largo */
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;

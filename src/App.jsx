@@ -1,7 +1,7 @@
 // src/App.jsx
 import React from 'react';
 import { Routes, Route, Link } from 'react-router-dom';
-import './App.css'; // Estilos generales
+import './App.css';
 import SearchBar from './components/SearchBar';
 import ImageGrid from './components/ImageGrid';
 import { useTheme } from './contexts/ThemeContext';
@@ -9,10 +9,10 @@ import { useAuth } from './contexts/AuthContext';
 import ImageDetailPage from './pages/ImageDetailPage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
-import SavedImagesPage from './pages/SavedImagesPage'; // Asegúrate de que esta importación esté
+import SavedImagesPage from './pages/SavedImagesPage';
 import useUnsplashImages from './hooks/useUnsplashImages';
 import FilterBar from './components/FilterBar';
-import Pagination from './components/Pagination'; // Asegúrate de que esta importación esté
+import Pagination from './components/Pagination';
 
 function App() {
   const { theme, toggleTheme } = useTheme();
@@ -33,10 +33,26 @@ function App() {
     handlePageChange
   } = useUnsplashImages();
 
+  // Función para resetear la búsqueda y volver a la página principal de imágenes random
+  const resetSearchAndGoHome = () => {
+    handleSearch('random'); // Establece el término de búsqueda a 'random'
+    // Opcional: También puedes resetear filtros si lo deseas:
+    // setOrientation('');
+    // setOrderBy('relevant');
+  };
+
+  // Función para limpiar solo la búsqueda actual
+  const clearCurrentSearch = () => {
+    handleSearch('random'); // Vuelve a las imágenes random
+  };
+
   return (
     <div className="App">
       <header className="App-header">
-        <h1>Pinfluence Clone</h1>
+        <Link to="/" onClick={resetSearchAndGoHome} className="app-title-link">
+          <h1>Pinfluence Clone</h1>
+        </Link>
+
         <SearchBar onSearch={handleSearch} />
         <FilterBar
           orientation={orientation}
@@ -48,7 +64,6 @@ function App() {
           {isAuthenticated ? (
             <>
               <span className="welcome-message">Hola, {user.username}!</span>
-              {/* ENLACE A MIS PINES: Solo se muestra si el usuario está autenticado */}
               <Link to="/saved" className="auth-button-header">
                 Mis Pines
               </Link>
@@ -68,17 +83,27 @@ function App() {
       </header>
 
       <main>
+        {/* Aquí mostramos el indicador de búsqueda si searchTerm no es 'random' */}
+        {searchTerm && searchTerm !== 'random' && (
+          <div className="search-indicator-container">
+            <p className="search-indicator-text">
+              Resultados para: "<span className="search-term-display">{searchTerm}</span>"
+            </p>
+            <button onClick={clearCurrentSearch} className="clear-search-button">
+              Limpiar Búsqueda &times;
+            </button>
+          </div>
+        )}
+
         <Routes>
           <Route
             path="/"
             element={
               <>
                 {error && <p className="error-message">{error}</p>}
-                {/* La cuadrícula de imágenes */}
                 {images.length > 0 && <ImageGrid images={images} />}
                 {loading && images.length === 0 && <p className="loading-message">Cargando imágenes...</p>}
 
-                {/* PAGINACIÓN: Solo se muestra si no está cargando, hay imágenes y más de una página */}
                 {!loading && images.length > 0 && totalPages > 1 && (
                   <Pagination
                     currentPage={page}
@@ -96,7 +121,6 @@ function App() {
           <Route path="/image/:id" element={<ImageDetailPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
-          {/* RUTA A MIS PINES */}
           <Route path="/saved" element={<SavedImagesPage />} />
         </Routes>
       </main>

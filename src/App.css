@@ -142,3 +142,56 @@ main {
     justify-content: center;
   }
 }
+
+.app-title-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.app-title-link h1 {
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+.search-indicator-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  margin-top: 20px; /* Espacio debajo del header */
+  margin-bottom: 20px; /* Espacio antes del grid */
+  padding: 10px 20px;
+  background-color: var(--card-background); /* Fondo del indicador */
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  max-width: fit-content; /* Se ajusta al contenido */
+  margin-left: auto; /* Centra el div */
+  margin-right: auto; /* Centra el div */
+}
+
+.search-indicator-text {
+  font-size: 1.1em;
+  color: var(--text-color);
+  margin: 0;
+}
+
+.search-term-display {
+  font-weight: bold;
+  color: var(--primary-color);
+}
+
+.clear-search-button {
+  background-color: var(--secondary-color);
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 6px 12px;
+  font-size: 0.9em;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.clear-search-button:hover {
+  background-color: var(--hover-color);
+}

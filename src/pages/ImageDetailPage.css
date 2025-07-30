@@ -1,146 +1,86 @@
-/* src/pages/ImageDetailPage.css */
 .image-detail-page {
-  padding: 2rem;
-  max-width: 900px;
-  margin: 0 auto;
-  text-align: center;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px; /* Espacio entre los elementos de la página de detalle */
+}
+
+.detail-image-container {
+  background-color: var(--card-background);
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  max-width: 700px; /* <-- ¡Tamaño máximo de la imagen más reducido! Antes 900px */
+  width: 100%; /* Asegura que no sea más grande que el contenedor */
+}
+
+.detail-image-container img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.image-info {
+  width: 100%;
+  max-width: 700px; /* Ajusta también la información al mismo ancho */
+  text-align: left;
+  background-color: var(--card-background);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.image-info h2 {
+  color: var(--primary-color);
+  margin-bottom: 10px;
+  font-size: 1.8em;
+}
+
+.image-info p {
+  color: var(--text-color);
+  margin-bottom: 8px;
+  line-height: 1.5;
+}
+
+.image-info a {
+  color: var(--secondary-color);
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.image-info a:hover {
+  text-decoration: underline;
 }
 
 .back-button {
-  display: inline-block;
-  margin-bottom: 2rem;
-  padding: 10px 20px;
   background-color: var(--secondary-color);
   color: white;
-  text-decoration: none;
-  border-radius: 25px;
-  transition: background-color 0.2s ease, transform 0.2s ease;
-  font-weight: 600;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1em;
+  transition: background-color 0.2s ease;
+  text-decoration: none; /* Si usas Link */
+  display: inline-block; /* Si usas Link */
+  margin-top: 20px; /* Espacio extra */
 }
 
 .back-button:hover {
   background-color: var(--hover-color);
-  transform: translateY(-2px);
-}
-
-.detail-card {
-  background-color: var(--card-background);
-  border-radius: 12px;
-  box-shadow: 0 4px 15px var(--shadow-color);
-  padding: 2rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1.5rem;
-  margin-bottom: 3rem;
-}
-
-.detail-image {
-  max-width: 100%;
-  height: auto;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-}
-
-.detail-info {
-  text-align: left;
-  width: 100%;
-}
-
-.detail-info h2 {
-  font-size: 2em;
-  color: var(--primary-color);
-  margin-bottom: 10px;
-}
-
-.detail-info .author {
-  font-size: 1.1em;
-  color: var(--text-color);
-  margin-bottom: 15px;
-}
-
-.detail-info .author a {
-  color: var(--secondary-color);
-  text-decoration: none;
-}
-
-.detail-info .author a:hover {
-  text-decoration: underline;
-}
-
-.detail-info .description {
-  font-size: 1em;
-  line-height: 1.6;
-  color: var(--text-color);
-  margin-bottom: 15px;
-}
-
-.detail-info .likes {
-  font-size: 1em;
-  color: var(--text-color);
-  margin-bottom: 15px;
-}
-
-.download-button {
-  display: inline-block;
-  background-color: var(--primary-color);
-  color: white;
-  padding: 12px 25px;
-  border-radius: 30px;
-  text-decoration: none;
-  font-weight: 600;
-  transition: background-color 0.2s ease, transform 0.2s ease;
-}
-
-.download-button:hover {
-  background-color: var(--hover-color);
-  transform: translateY(-2px);
-}
-
-.tags {
-  margin-top: 20px;
-}
-
-.tags h3 {
-  font-size: 1.2em;
-  color: var(--text-color);
-  margin-bottom: 10px;
-}
-
-.tag {
-  display: inline-block;
-  background-color: var(--secondary-color);
-  color: white;
-  padding: 5px 10px;
-  border-radius: 5px;
-  margin: 5px;
-  font-size: 0.9em;
-}
-
-.related-images-section {
-  margin-top: 4rem;
-  text-align: left;
-}
-
-.related-images-section h2 {
-  font-size: 1.8em;
-  color: var(--primary-color);
-  margin-bottom: 1.5rem;
 }
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
-  .detail-card {
-    padding: 1rem;
+  .image-detail-page {
+    padding: 15px;
+    gap: 20px;
   }
-  .detail-info h2 {
-    font-size: 1.5em;
+  .detail-image-container, .image-info {
+    max-width: 100%; /* Ocupa todo el ancho disponible */
   }
-  .back-button, .download-button {
-    padding: 8px 15px;
-    font-size: 0.9rem;
-  }
-  .related-images-section h2 {
+  .image-info h2 {
     font-size: 1.5em;
   }
 }

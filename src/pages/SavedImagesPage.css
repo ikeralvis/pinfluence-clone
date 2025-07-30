@@ -21,3 +21,60 @@
 .error-message {
   color: #e74c3c;
 }   
+
+.clear-pines-button {
+  background-color: #e74c3c; /* Un color rojo para indicar "peligro" */
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1em;
+  transition: background-color 0.2s ease;
+  margin-bottom: 20px; /* Espacio debajo del botón */
+}
+
+.clear-pines-button:hover {
+  background-color: #c0392b; /* Rojo más oscuro al pasar el ratón */
+}
+
+.saved-images-header-actions {
+  display: flex;
+  justify-content: space-between; /* Espacia los elementos horizontalmente */
+  align-items: center;
+  width: 100%;
+  max-width: 1200px; /* Asegúrate de que coincida con el max-width de tu grid */
+  margin: 0 auto 30px auto; /* Centra y añade margen inferior */
+  padding: 0 20px; /* Padding para que no se pegue a los bordes */
+}
+
+.saved-images-header-actions h2 {
+  flex-grow: 1; /* Permite que el título ocupe el espacio restante */
+  text-align: center; /* Centra el título dentro del espacio disponible */
+  margin: 0; /* Elimina márgenes extra del h2 */
+}
+
+.back-to-home-button {
+  background-color: var(--secondary-color);
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1em;
+  transition: background-color 0.2s ease;
+  white-space: nowrap; /* Evita que el texto se rompa */
+}
+
+.back-to-home-button:hover {
+  background-color: var(--hover-color);
+}
+
+/* Ajustes para que los botones de la cabecera no se solapen en móvil */
+@media (max-width: 768px) {
+  .saved-images-header-actions {
+    flex-direction: column; /* Apila los elementos en pantallas pequeñas */
+    gap: 15px; /* Espacio entre los elementos apilados */
+    padding: 0 15px;
+  }
+}
