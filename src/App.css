@@ -1,0 +1,144 @@
+/* src/App.css */
+
+.App {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+.App-header {
+  width: 100%;
+  max-width: 800px; /* Limita el ancho del header para mejor legibilidad */
+  margin-bottom: 2rem;
+  padding: 1.5rem; /* Más padding para un look más espacioso */
+  background-color: var(--card-background);
+  box-shadow: 0 4px 10px var(--shadow-color); /* Sombra más prominente */
+  border-radius: 12px; /* Bordes más redondeados */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem; /* Espacio entre elementos del header */
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  display: flex; /* Asegura que los elementos del header estén en fila */
+  flex-wrap: wrap; /* Permite que los elementos se envuelvan en pantallas pequeñas */
+  justify-content: space-between; /* Espacio entre los elementos */
+  align-items: center;
+  padding: 20px 40px; /* Ajusta el padding */
+  gap: 15px; /* Espacio entre los elementos del header */
+}
+
+.App-header h1 {
+  color: var(--primary-color);
+  font-size: 2.8rem; /* Título más grande */
+  font-weight: 700; /* Negrita */
+  margin: 0;
+  letter-spacing: -1px; /* Ajuste de espaciado para un look moderno */
+}
+
+.theme-toggle-button {
+  background-color: var(--secondary-color); /* Usa el color secundario */
+  color: white;
+  border: none;
+  padding: 10px 20px; /* Más padding */
+  border-radius: 25px; /* Botón de píldora */
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.theme-toggle-button:hover {
+  background-color: var(--hover-color); /* Usa el color de hover del primario */
+  transform: translateY(-2px); /* Pequeño efecto de elevación */
+}
+
+main {
+  width: 100%;
+  max-width: 1280px; /* Asegura que el main también tenga un ancho máximo */
+  padding: 0 1rem; /* Padding horizontal */
+}
+
+.loading-message,
+.error-message,
+.no-results-message {
+  font-size: 1.2em;
+  font-weight: 600;
+  margin-top: 3rem;
+  padding: 1rem;
+  border-radius: 8px;
+  background-color: var(--card-background);
+  box-shadow: 0 2px 5px var(--shadow-color);
+  color: var(--text-color); /* Color de texto del tema */
+}
+
+
+.error-message {
+  color: var(--primary-color); /* El mensaje de error destaca con el color principal */
+}
+
+/* Ocultar el texto del loader temporal que usamos para el IntersectionObserver */
+[ref="loader"] p {
+  visibility: hidden; /* Oculta el texto "Cargando más imágenes..." */
+  height: 0; /* Asegura que no ocupe espacio si está oculto */
+  margin: 0; /* Elimina márgenes */
+  padding: 0; /* Elimina paddings */
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px; /* Espacio entre los botones de acción */
+}
+
+.auth-button-header {
+  background-color: var(--secondary-color);
+  color: white;
+  padding: 8px 15px;
+  border: none;
+  border-radius: 20px;
+  font-size: 0.9em;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none; /* Para Link */
+  display: inline-flex; /* Para Link */
+  align-items: center; /* Para Link */
+  justify-content: center; /* Para Link */
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.auth-button-header:hover {
+  background-color: var(--hover-color);
+  transform: translateY(-2px);
+}
+
+.welcome-message {
+  color: var(--text-color);
+  font-weight: 600;
+  font-size: 1em;
+}
+
+/* Ajustes responsivos para el header */
+@media (max-width: 768px) {
+  .App-header {
+    flex-direction: column; /* Apila los elementos en pantallas pequeñas */
+    align-items: flex-start; /* Alinea a la izquierda */
+    padding: 15px 20px;
+  }
+
+  .App-header h1 {
+    margin-bottom: 10px;
+  }
+
+  .search-bar, .filter-bar, .header-actions {
+    width: 100%; /* Ocupa todo el ancho */
+    justify-content: center; /* Centra los elementos */
+    margin-bottom: 10px;
+  }
+
+  .header-actions {
+    flex-wrap: wrap; /* Permite que los botones de acción se envuelvan */
+    justify-content: center;
+  }
+}

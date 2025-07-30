@@ -1,0 +1,25 @@
+/* src/components/ImageGrid.css */
+.image-grid {
+  column-count: 5;
+  column-gap: 15px; /* Mantén el mismo gap que el margin-bottom de ImageCard */
+  margin-top: 20px;
+}
+
+/* Media queries para responsividad */
+@media (max-width: 1100px) {
+  .image-grid {
+    column-count: 4;
+  }
+}
+
+@media (max-width: 800px) {
+  .image-grid {
+    column-count: 3;
+  }
+}
+
+@media (max-width: 500px) {
+  .image-grid {
+    column-count: 2;
+  }
+}
